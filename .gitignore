@@ -9,3 +9,27 @@ yarn-error.log*
 .pnp.js
 
 .vscode/*
+
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+*.tsbuildinfo
+
+dist/
+
+.env
+.env.local
+.env.production
+
+.DS_Store
+Thumbs.db
+
+.env
+.env.local
+.env.production
+
+.DS_Store
+Thumbs.db
+:wq
