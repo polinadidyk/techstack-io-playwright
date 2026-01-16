@@ -1,6 +1,3 @@
-.text-color.some{
-    color:blueviolet;
-}
-#bold-text{
-    color:deeppink;
+.text-color.some#some-text {
+    color: green;
 }
