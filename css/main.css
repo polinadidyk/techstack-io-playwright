@@ -1,3 +1,6 @@
-.text-color.some#some-text {
+/*.text-color.some#some-text {
     color: green;
+}*/
+div p, #bold-text {
+    color: pink;
 }
