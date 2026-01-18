@@ -17,10 +17,14 @@ cursor: pointer;
     color: purple;
 }
 
-.input {
+input {
     width: 200px;
 }
 
-.input:focus {
+input:focus {
   width: 400px;
+}
+
+p.main-text::after {
+    content: attr(title)"123";
 }
