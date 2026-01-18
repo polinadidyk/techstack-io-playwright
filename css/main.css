@@ -1,30 +1,9 @@
-.link {
-color:brown;
-text-decoration: underline;
+body {
+    background-color: blue;
 }
 
-.link:hover {
-color: orange;
-text-decoration: overline;
-cursor: pointer;
-}
-
-.link:active {
-    text-decoration-color: aqua;
-}
-
-.link:visited {
-    color: purple;
-}
-
-input {
-    width: 200px;
-}
-
-input:focus {
-  width: 400px;
-}
-
-p.main-text::after {
-    content: attr(title)"123";
+#block {
+    background-color: red;
+    width: 500px;
+    height: 500px;
 }
