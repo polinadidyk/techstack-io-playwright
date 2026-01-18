@@ -6,5 +6,21 @@ text-decoration: underline;
 .link:hover {
 color: orange;
 text-decoration: overline;
-coursore: pointer;
+cursor: pointer;
+}
+
+.link:active {
+    text-decoration-color: aqua;
+}
+
+.link:visited {
+    color: purple;
+}
+
+.input {
+    width: 200px;
+}
+
+.input:focus {
+  width: 400px;
 }
