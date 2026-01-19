@@ -1,3 +1,77 @@
-body {
-    background: rgb(150, 135, 135);
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body { 
+    background: #222;
+height: 2000px;
+}
+.block {
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+}
+
+header, footer {
+    width: 100%;
+    height: 70px;
+    text-align: center;
+    background: rgb(20, 20, 20); 
+    color: #fff;
+    line-height: 70px;
+    float: left;
+}
+
+main {
+    width: 40%;
+    margin-left: 20%;
+    background: #fafafa;
+    padding: 20px 2.5%;
+    float: left;
+}
+
+aside {
+    width: 20%;
+    padding: 20px 2.5%;
+    background: #fafafa;
+    /*border: 1px solid silver;*/
+    float: right;
+    margin-left: 10%;
+
+    position: absolute;
+    top: 70px;
+    z-index: 1;
+
+}
+
+header {
+    border-bottom: 4px solid #000;
+    margin-bottom: 50px;
+    z-index: 2;
+    position: absolute;
+}
+
+#add-to-card {
+    background: red;
+    color: #fff;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
+    position: fixed;
+    top: 100px;
+    left: 70px;
+    cursor: pointer; 
+}
+
+ #add-to-card:hover {
+     background: rgb(100, 30, 30);
+ }
+
+
+footer {
+    border-top: 4px solid #000;
+    margin-top: 50px;
 }
