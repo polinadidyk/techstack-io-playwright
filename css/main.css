@@ -23,13 +23,15 @@ header, footer {
     float: left;
 }
 
-main {
-    width: 40%;
-    margin-left: 20%;
-    background: #fafafa;
-    padding: 20px 2.5%;
-    float: left;
+#nav {
+    list-style: none;
+    display: block;
+    width: 50%;
+    margin-left: 25%;
+
 }
+
+
 
 aside {
     width: 20%;
@@ -44,6 +46,17 @@ aside {
     z-index: 1;
 
 }
+
+main {
+  width: 40%;
+  margin-left: 20%;
+  background: #fafafa;
+  padding: 20px 2.5%;
+  position: absolute;
+  top: 160px;   
+  left: 0;      
+}
+
 
 header {
     border-bottom: 4px solid #000;
