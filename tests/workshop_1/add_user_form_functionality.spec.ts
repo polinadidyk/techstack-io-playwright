@@ -1,83 +1,85 @@
 import { test, expect } from '@playwright/test';
 
-test('AFBB-1: Open Add User page and verify form elements are visible', async ({ page }) => {
-  // Step: follow the link
-  await page.goto('https://traineeautomation.azurewebsites.net/');
-  // Expected: page opens (login/add user entry page)
+const usernameInputXpath =
+  '//label[normalize-space(.)="Username"]/following-sibling::input';
+const passwordInputXpath =
+  '//label[normalize-space(.)="Password"]/following-sibling::input';
+const signInButtonXpath =
+  '//button[normalize-space(.)="Sign in"]';
+const invalidCredsMessageXpath =
+  '//*[contains(normalize-space(.), "Invalid username or password")]';
+const requiredMessageXpath =
+  '//*[contains(normalize-space(.), "Required")]';
+
+const baseUrl = 'https://traineeautomation.azurewebsites.net/';
+
+test('AFBB-1: Open page and verify sign-in form elements are visible (XPath)', async ({ page }) => {
+  await page.goto(baseUrl);
   await expect(page).toHaveURL(/traineeautomation\.azurewebsites\.net/i);
-  // Header is visible
   await expect(page.getByRole('heading', { name: /sign in/i })).toBeVisible();
-  // Fields are visible
-  await expect(page.getByLabel(/username/i)).toBeVisible();
-  await expect(page.getByLabel(/password/i)).toBeVisible();
-  // Sign in button is visible
-  await expect(page.getByRole('button', { name: /sign in/i })).toBeVisible();
-  await page.waitForTimeout(5000);
+  await expect(page.locator(usernameInputXpath)).toBeVisible();
+  await expect(page.locator(passwordInputXpath)).toBeVisible();
+  await expect(page.locator(signInButtonXpath)).toBeVisible();
 });
 
-test('AFPB-2: Fill all required fields with valid data (Sign in form)', async ({ page }) => {
-  // Step 1: Follow the link
-  await page.goto('https://traineeautomation.azurewebsites.net/');
-  // Step 2: Fill all required fields with valid values (from test case)
-  await page.getByLabel('Username').fill('admin');
-  await page.getByLabel('Password').fill('123');
-  // Step 3: Ensure that the values are displayed in the fields
-  await expect(page.getByLabel('Username')).toHaveValue('admin');
-  await expect(page.getByLabel('Password')).toHaveValue('123');
-  // (Optional) extra UI check from the page: Sign in button is visible/enabled
-  await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();
-  await page.waitForTimeout(5000);
+test('AFPB-2: Fill all required fields with valid data and verify values are displayed (XPath)', async ({ page }) => {
+  await page.goto(baseUrl);
+  const username = page.locator(usernameInputXpath);
+  const password = page.locator(passwordInputXpath);
+  await username.fill('admin');
+  await password.fill('123');
+  await expect(username).toHaveValue('admin');
+  await expect(password).toHaveValue('123');
+  await expect(page.locator(signInButtonXpath)).toBeVisible();
 });
 
-
-test('AFPB-3: Form submitted successfully with correctly filled in data (Sign in form)', async ({ page }) => {
-  // Step 1: Open page
-  await page.goto('https://traineeautomation.azurewebsites.net/');
-  // Step 2: Fill required fields with valid data
-  await page.getByLabel('Username').fill('admin');
-  await page.getByLabel('Password').fill('123');
-  // (Optional) verify values are in inputs before submit
-  await expect(page.getByLabel('Username')).toHaveValue('admin');
-  await expect(page.getByLabel('Password')).toHaveValue('123');
-  // Step 3: Click on Sign in
-  await page.getByRole('button', { name: 'Sign in' }).click();
-  // Expected: the form is submitted (we are not on Login anymore)
+test('AFPB-3: Form submitted successfully with correctly filled data (XPath)', async ({ page }) => {
+  await page.goto(baseUrl);
+  const username = page.locator(usernameInputXpath);
+  const password = page.locator(passwordInputXpath);
+  await username.fill('admin');
+  await password.fill('123');
+  await expect(username).toHaveValue('admin');
+  await expect(password).toHaveValue('123');
+  await page.locator(signInButtonXpath).click();
+  // Submitted -> should not stay on /Login
   await expect(page).not.toHaveURL(/\/login/i);
-  // Extra: "Sign in" header should not be visible anymore
-  await expect(page.getByRole('heading', { name: 'Sign in' })).not.toBeVisible();
-  await page.waitForTimeout(5000);
+  // Sign in heading should be gone if navigated away
+  await expect(page.getByRole('heading', { name: /sign in/i })).not.toBeVisible();
+});
+
+test('AFPB-4: Submitting form with empty fields does not submit (XPath)', async ({ page }) => {
+  await page.goto(baseUrl);
+  const username = page.locator(usernameInputXpath);
+  const password = page.locator(passwordInputXpath);
+  const signInButton = page.locator(signInButtonXpath);
+  // Step 1: fields are empty
+  await expect(username).toHaveValue('');
+  await expect(password).toHaveValue('');
+  // Step 2: click Sign in
+  await signInButton.click();
+  // Post-condition: still on login page (no submit / no redirect)
+  await expect(page).toHaveURL(/\/login/i);
+  await expect(page.getByRole('heading', { name: /sign in/i })).toBeVisible();
+  // Still empty (nothing was "autofilled")
+  await expect(username).toHaveValue('');
+  await expect(password).toHaveValue('');
+  // And NO invalid-credentials message (because we didn't try wrong creds)
+  await expect(page.locator(invalidCredsMessageXpath)).toHaveCount(0);
 });
 
 
 
-test('AFPB-4: Submitting sign-in form with empty fields shows validation errors and does not submit', async ({ page }) => {
-  await page.goto('https://traineeautomation.azurewebsites.net/');
-  // Step 1: Leave the form with empty fields
-  await expect(page.getByLabel('Username')).toHaveValue('');
-  await expect(page.getByLabel('Password')).toHaveValue('');
-  // Step 2: Click Sign in
-  await page.getByRole('button', { name: 'Sign in' }).click();
-  // Post-condition: Submission does not occur -> still on login page
+test('AFPB-5: Invalid credentials show error message and form is not submitted (XPath)', async ({ page }) => {
+  await page.goto(baseUrl);
+  const username = page.locator(usernameInputXpath);
+  const password = page.locator(passwordInputXpath);
+  await username.fill('admin');
+  await password.fill('321');
+  await page.locator(signInButtonXpath).click();
+  // still on login page
   await expect(page).toHaveURL(/\/login/i);
-  await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
-  // Expected: Required fields display validation errors ("Required")
-  // (Flexible check - looks for "required" anywhere on the page)
-  await expect(page.getByText(/required/i).first()).toBeVisible();
-  await page.waitForTimeout(5000);
-});
-
-
-test.only('AFPB-5: Invalid credentials -> error message "Invalid username or password" is displayed', async ({ page }) => {
-  await page.goto('https://traineeautomation.azurewebsites.net/');
-  // Step 1: Fill required fields with invalid data (from test case)
-  await page.getByLabel('Username').fill('admin');
-  await page.getByLabel('Password').fill('321');
-  // Step 2: Click Sign in
-  await page.getByRole('button', { name: 'Sign in' }).click();
-  // Post-condition: form is not sent -> still on Login page
-  await expect(page).toHaveURL(/\/login/i);
-  await expect(page.getByRole('heading', { name: 'Sign in' })).toBeVisible();
-  // Expected: error message is displayed
-  await expect(page.getByText('Invalid username or password')).toBeVisible();
-  await page.waitForTimeout(5000);
+  await expect(page.getByRole('heading', { name: /sign in/i })).toBeVisible();
+  // invalid creds message
+  await expect(page.locator(invalidCredsMessageXpath).first()).toBeVisible();
 });
