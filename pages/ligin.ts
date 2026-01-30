@@ -5,6 +5,7 @@ exports.LoginPage = class LoginPage {
     this.username_textbox = page.getByTestId('username-field').getByTestId('input');
     this.password_textbox = page.getByTestId('password-field').getByTestId('input');
     this.signin_button = page.getByRole('button', { name: 'Sign in' });
+    
 }
 
 async goToLoginPage(){
@@ -16,4 +17,9 @@ async login(username, password){
     await this.password_textbox.fill(password);
     await this.signin_button.click();
 }
+
+async signIn(){
+   await this.signin_button.click()
+}
+
 }
