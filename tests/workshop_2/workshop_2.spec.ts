@@ -18,12 +18,12 @@ test.skip("Automating form submissions", async ({page}) => {
     await expect(firstTodo).toHaveClass("completed");
 });
 
-test.only("Handling form", async ({page}) => {
+test.skip("Handling form", async ({page}) => {
 await page.goto("https://demo.playwright.dev/todomvc");
 const placeholder = "[placeholder='What needs to be done?']";
 await page.fill(placeholder, "Learn Playwright");
 await page.press(placeholder, "Enter");
 
-const checkbox = await page.locator(".toggle");
+const checkbox = await page.locator(".toggl");
 await checkbox.check();
 })

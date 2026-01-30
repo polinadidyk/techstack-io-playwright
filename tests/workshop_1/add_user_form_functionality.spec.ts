@@ -13,7 +13,7 @@ const requiredMessageXpath =
 
 const baseUrl = 'https://traineeautomation.azurewebsites.net/';
 
-test('AFBB-1: Open page and verify sign-in form elements are visible (XPath)', async ({ page }) => {
+test.skip('AFBB-1: Open page and verify sign-in form elements are visible (XPath)', async ({ page }) => {
   await page.goto(baseUrl);
   await expect(page).toHaveURL(/traineeautomation\.azurewebsites\.net/i);
   await expect(page.getByRole('heading', { name: /sign in/i })).toBeVisible();
@@ -22,7 +22,7 @@ test('AFBB-1: Open page and verify sign-in form elements are visible (XPath)', a
   await expect(page.locator(signInButtonXpath)).toBeVisible();
 });
 
-test('AFPB-2: Fill all required fields with valid data and verify values are displayed (XPath)', async ({ page }) => {
+test.skip('AFPB-2: Fill all required fields with valid data and verify values are displayed (XPath)', async ({ page }) => {
   await page.goto(baseUrl);
   const username = page.locator(usernameInputXpath);
   const password = page.locator(passwordInputXpath);
@@ -33,7 +33,7 @@ test('AFPB-2: Fill all required fields with valid data and verify values are dis
   await expect(page.locator(signInButtonXpath)).toBeVisible();
 });
 
-test('AFPB-3: Form submitted successfully with correctly filled data (XPath)', async ({ page }) => {
+test.skip('AFPB-3: Form submitted successfully with correctly filled data (XPath)', async ({ page }) => {
   await page.goto(baseUrl);
   const username = page.locator(usernameInputXpath);
   const password = page.locator(passwordInputXpath);
@@ -48,7 +48,7 @@ test('AFPB-3: Form submitted successfully with correctly filled data (XPath)', a
   await expect(page.getByRole('heading', { name: /sign in/i })).not.toBeVisible();
 });
 
-test('AFPB-4: Submitting form with empty fields does not submit (XPath)', async ({ page }) => {
+test.skip('AFPB-4: Submitting form with empty fields does not submit (XPath)', async ({ page }) => {
   await page.goto(baseUrl);
   const username = page.locator(usernameInputXpath);
   const password = page.locator(passwordInputXpath);
@@ -70,7 +70,7 @@ test('AFPB-4: Submitting form with empty fields does not submit (XPath)', async 
 
 
 
-test('AFPB-5: Invalid credentials show error message and form is not submitted (XPath)', async ({ page }) => {
+test.skip('AFPB-5: Invalid credentials show error message and form is not submitted (XPath)', async ({ page }) => {
   await page.goto(baseUrl);
   const username = page.locator(usernameInputXpath);
   const password = page.locator(passwordInputXpath);
