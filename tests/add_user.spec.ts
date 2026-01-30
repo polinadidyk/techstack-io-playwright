@@ -6,7 +6,7 @@ test("goToPageTest", async ({ page }) => {
 });
 
 
-test.only("fillWithValidDataTest", async ({ page }) => {
+test("fillWithValidDataTest", async ({ page }) => {
 
 const Login = new LoginPage(page) 
 
@@ -30,6 +30,8 @@ test("SendWithoutDataTest", async ({ page }) => {
 
   await Login.goToLoginPage();
   await Login.signIn();
+  await expect(page.getByText('Username is required.')).toBeVisible();
+  await expect(page.getByText('Password is required.')).toBeVisible();
 
  //  await page.goto('https://traineeautomation.azurewebsites.net/Login?returnUrl=%2F'); //отправка пустой формы 
  // await page.getByRole('button', { name: 'Sign in' }).click();
@@ -37,12 +39,13 @@ test("SendWithoutDataTest", async ({ page }) => {
 
 
 
-test("SendWithInvalidDataTest", async ({ page }) => {
+test.only("SendWithInvalidDataTest", async ({ page }) => {
 
 const Login = new LoginPage(page)  
 
 await Login.goToLoginPage();
 await Login.login("kjgh","321");
+await expect(page).toHaveURL(/\/Login/i);
 
   //await page.goto('https://traineeautomation.azurewebsites.net/Login?returnUrl=%2F'); //отправка невалидных данных
   //await page.getByTestId('username-field').getByTestId('input').click();
