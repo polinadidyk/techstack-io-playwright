@@ -1,25 +1,32 @@
-exports.LoginPage = class LoginPage {
+import { type Page, type Locator } from '@playwright/test';
 
-    constructor (page) {
-    this.page = page
-    this.username_textbox = page.getByTestId('username-field').getByTestId('input');
-    this.password_textbox = page.getByTestId('password-field').getByTestId('input');
-    this.signin_button = page.getByRole('button', { name: 'Sign in' });
-    
-}
+export class LoginPage {
+  private readonly page: Page;
+  private readonly usernameTextbox: Locator;
+  private readonly passwordTextbox: Locator;
+  private readonly signInButton: Locator;
 
-async goToLoginPage(){
+  constructor(page: Page) {
+    this.page = page;
+
+    this.usernameTextbox = page.getByTestId('username-field').getByTestId('input');
+    this.passwordTextbox = page.getByTestId('password-field').getByTestId('input');
+    this.signInButton = page.getByRole('button', { name: 'Sign in' });
+  }
+
+  async goToLoginPage(): Promise<void> {
     await this.page.goto('https://traineeautomation.azurewebsites.net/Login?returnUrl=%2F');
-}
+  }
 
-async login(username, password){
-    await this.username_textbox.fill(username);
-    await this.password_textbox.fill(password);
-    await this.signin_button.click();
-}
+  async login(username: string, password: string): Promise<void> {
+    await this.usernameTextbox.fill(username);
+    await this.passwordTextbox.fill(password);
+    await this.signInButton.click();
+  }
+
+
 
 async signIn(){
-   await this.signin_button.click()
+   await this.signInButton.click()
 }
-
 }

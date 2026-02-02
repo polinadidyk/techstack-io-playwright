@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'; //ВСЕ ТЕСТЫ ТУТ ПОКА НИЧЕГО НЕ ПРОВЕРЯЮТ ИСХОДЯ ИЗ КОДА
+import { test, expect } from '@playwright/test'; 
 import { LoginPage } from "../pages/ligin"; 
 
 test("goToPageTest", async ({ page }) => {
@@ -39,7 +39,7 @@ test("SendWithoutDataTest", async ({ page }) => {
 
 
 
-test.only("SendWithInvalidDataTest", async ({ page }) => {
+test("SendWithInvalidDataTest", async ({ page }) => {
 
 const Login = new LoginPage(page)  
 
