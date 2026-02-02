@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'; 
-import { LoginPage } from "../pages/ligin"; 
+import { LoginPage } from '../pages1/ligin'; 
 
 test("goToPageTest", async ({ page }) => {
   await page.goto('https://traineeautomation.azurewebsites.net/Login?returnUrl=%2F'); // переход на страницу БЕЗ ЗАПОЛНЕНИЯ ПОЛЕЙ 
