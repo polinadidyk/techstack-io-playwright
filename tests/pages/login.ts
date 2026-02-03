@@ -10,8 +10,8 @@ export class LoginPage {
   constructor(page: Page) {
     this.page = page;
 
-    this.usernameTextbox = page.getByTestId('username-field').getByTestId('input');
-    this.passwordTextbox = page.getByTestId('password-field').getByTestId('input');
+    this.usernameTextbox = page.getByTestId('username-input');
+    this.passwordTextbox = page.getByTestId('password-input');
     this.signInButton = page.getByRole('button', { name: 'Sign in' });
   }
 

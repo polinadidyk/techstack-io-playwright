@@ -1,5 +1,5 @@
 import { expect, type Page } from "@playwright/test";
-import { LoginPage } from "../models/login";
+import { LoginPage } from "../pages/login";
 import { CredentialsDTO } from "../dto/CredentialsDTO";
 
 export class LoginSteps {
